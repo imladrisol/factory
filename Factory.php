@@ -1,33 +1,45 @@
 <?php
+
 //первый вариант
-class Oven {
+class Oven
+{
+    /**
+     * @param string $dish
+     * @return Dish|null
+     * @throws Exception
+     */
     public function getDish($dish)
     {
-        if($dish == 'borsch'){
-            return new Borsch();
+        $obj = null;
+        if ($dish == 'borsch') {
+            $obj = new Borsch();
+        } else {
+            throw new Exception('there is no such a dish');
         }
-        return null;
+        return $obj;
     }
 }
 
-interface Dish{
+interface Dish
+{
     public function cook();
 }
 
-class Borsch implements Dish{
-    public function cook(){
+class Borsch implements Dish
+{
+    public function cook()
+    {
         echo 'borsch cooking';
     }
 }
 
-$cooker = new Oven();
-$dish  = $cooker->getDish('borsch');
-if($dish){
+try {
+    $cooker = new Oven();
+    $dish = $cooker->getDish('borsch');
     $dish->cook();
-} else {
-    echo 'there is no such a dish';
+} catch (Exception $e) {
+    echo $e->getMessage();
 }
-
 
 
 //второй вариант
